@@ -20,8 +20,8 @@ export default function HomeScreen() {
             <View style={{paddingHorizontal: 20}}>
               <BannerCarousel />
               <Recommendations />
-              <Categories />
             </View>
+            <Categories />
           </ScrollView>
         </View>
       </SafeAreaView>

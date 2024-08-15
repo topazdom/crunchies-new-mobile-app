@@ -6,6 +6,9 @@ const categories = [
   { id: '1', name: 'Pizza', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
   { id: '2', name: 'Biryani', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
   { id: '3', name: 'Burger', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
+  { id: '4', name: 'Pizza', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
+  { id: '5', name: 'Biryani', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
+  { id: '6', name: 'Burger', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
   // Add more categories as needed
 ];
 
@@ -30,6 +33,7 @@ const Categories = () => {
         keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={{paddingLeft: 20}}
       />
     </View>
   );
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     marginBottom: 15,
-    marginLeft: 10,
+    marginLeft: 20,
   },
   categoryItem: {
     marginRight: 20,
