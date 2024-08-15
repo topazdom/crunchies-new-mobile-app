@@ -1,5 +1,7 @@
+import React, { useEffect } from 'react';
 import { Link, Stack } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from 'react-native-reanimated';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -8,6 +10,34 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CircularButton from '@/components/CircularButton';
 
 export default function OnboardingLanding() {
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(50);
+  const translateX = useSharedValue(50);
+
+  useEffect(() => {
+    opacity.value = withTiming(1, { duration: 1000 });
+    translateY.value = withTiming(0, { duration: 1000 });
+    translateX.value = withTiming(0, { duration: 1000 });
+  }, []);
+
+  const fadeInStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  });
+
+  const slideInStyleY = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  const slideInStyleX = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    };
+  });
+
   return (
     <ThemedView style={styles.container}>
       {/* Watermark */}
@@ -29,9 +59,7 @@ export default function OnboardingLanding() {
       </ThemedView>
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.subContainer]}>
-          <View
-            style={styles.logo}
-          >
+          <View style={styles.logo}>
             <Image
               source={require('@/assets/images/logo.png')}
               style={{
@@ -42,11 +70,15 @@ export default function OnboardingLanding() {
             />
           </View>
           <View style={styles.imagesContainer}>
-            <Image
+            <Animated.Image
               source={require('@/assets/images/sp1.png')}
-              style={[styles.absImage]}
+              style={[
+                styles.absImage,
+                fadeInStyle,
+                slideInStyleY,
+              ]}
             />
-            <Image
+            <Animated.Image
               source={require('@/assets/images/sp2.png')}
               style={[
                 styles.absImage,
@@ -55,11 +87,13 @@ export default function OnboardingLanding() {
                   height: deviceWidth * 0.75,
                   left: 'auto',
                   right: -(deviceWidth * 0.47),
-                  top: -20
-                }
+                  top: -20,
+                },
+                fadeInStyle,
+                slideInStyleX,
               ]}
             />
-            <Image
+            <Animated.Image
               source={require('@/assets/images/sp3.png')}
               style={[
                 styles.absImage,
@@ -67,11 +101,15 @@ export default function OnboardingLanding() {
                   width: deviceWidth * 0.70,
                   height: deviceWidth * 0.70,
                   top: deviceWidth * 0.40,
-                  left: -(deviceWidth * 0.48)
-                }
+                  left: -(deviceWidth * 0.48),
+                },
+                fadeInStyle,
+                useAnimatedStyle(() => ({
+                  transform: [{ translateX: -translateX.value }],
+                })),
               ]}
             />
-            <Image
+            <Animated.Image
               source={require('@/assets/images/sp4.png')}
               style={[
                 styles.absImage,
@@ -81,7 +119,11 @@ export default function OnboardingLanding() {
                   left: 'auto',
                   right: -(deviceWidth * 0.37),
                   top: deviceWidth * 0.65,
-                }
+                },
+                fadeInStyle,
+                useAnimatedStyle(() => ({
+                  transform: [{ translateY: -translateY.value }],
+                })),
               ]}
             />
           </View>
@@ -116,7 +158,7 @@ const styles = StyleSheet.create({
     height: deviceWidth * 0.45
   },
   imagesContainer: {
-
+    // This can remain empty if you don't need any specific styling for the container
   },
   absImage: {
     position: 'absolute',
