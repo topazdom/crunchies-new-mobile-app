@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { ThemedText } from './ThemedText';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Link } from 'expo-router';
 
 const CircularButton = () => {
   const text = 'Get Started - Get Started - ';
@@ -26,9 +27,14 @@ const CircularButton = () => {
           </View>
         ))}
       </View>
-      <TouchableOpacity style={styles.button}>
-        <FontAwesome6 name="arrow-right-long" size={24} color="#fff" />
-      </TouchableOpacity>
+      <Link
+        asChild
+        href='/(onboarding)/walkthrough'
+      >
+        <TouchableOpacity style={styles.button}>
+          <FontAwesome6 name="arrow-right-long" size={24} color="#fff" />
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };
