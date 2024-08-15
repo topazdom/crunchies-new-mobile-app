@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeHeader from '@/components/home/HomeHeader';
 import BannerCarousel from '@/components/home/BannerCarousel';
 import Recommendations from '@/components/home/Recommendations';
+import Categories from '@/components/home/Categories';
 
 export default function HomeScreen() {
   return (
@@ -19,6 +20,7 @@ export default function HomeScreen() {
             <View style={{paddingHorizontal: 20}}>
               <BannerCarousel />
               <Recommendations />
+              <Categories />
             </View>
           </ScrollView>
         </View>
