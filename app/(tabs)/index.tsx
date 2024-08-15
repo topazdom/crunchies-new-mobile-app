@@ -9,6 +9,8 @@ import HomeHeader from '@/components/home/HomeHeader';
 import BannerCarousel from '@/components/home/BannerCarousel';
 import Recommendations from '@/components/home/Recommendations';
 import Categories from '@/components/home/Categories';
+import FoodMenu from '@/components/home/FoodMenu';
+import SizedBox from '@/components/SizedBox';
 
 export default function HomeScreen() {
   return (
@@ -22,6 +24,8 @@ export default function HomeScreen() {
               <Recommendations />
             </View>
             <Categories />
+            <FoodMenu />
+            <SizedBox height={120} />
           </ScrollView>
         </View>
       </SafeAreaView>
