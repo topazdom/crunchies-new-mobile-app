@@ -28,3 +28,14 @@ export const Colors = {
     primaryLight: 'rgba(233,12,49,0.3)'
   },
 };
+
+export const commonColors = {
+  text: '#11181C',
+  background: '#fff',
+  tint: tintColorLight,
+  icon: '#687076',
+  tabIconDefault: '#687076',
+  tabIconSelected: tintColorLight,
+  primary: '#E90C31',
+  primaryLight: 'rgba(233,12,49,0.3)'
+}

@@ -4,6 +4,7 @@ import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedView } from './ThemedView';
+import { Link } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 const TAB_BAR_WIDTH = width;
@@ -16,29 +17,34 @@ const CustomTabBar = () => {
 
   const indicatorStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: withSpring(activeTab * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 2) }],
+      transform: [{ translateX: withSpring((activeTab * TAB_WIDTH) + (TAB_WIDTH - INDICATOR_WIDTH) / 2) }],
     };
   });
 
-  const renderIcon = (name, index) => (
-    <TouchableOpacity
-      style={styles.tabItem}
-      onPress={() => setActiveTab(index)}
+  const renderIcon = (name, index, href='') => (
+    <Link
+      asChild
+      href={href}
     >
-      <Ionicons 
-        name={name} 
-        size={24} 
-        color={activeTab === index ? '#010101' : '#8E8E8E'} 
-      />
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.tabItem}
+        onPress={() => setActiveTab(index)}
+      >
+        <Ionicons
+          name={name}
+          size={24}
+          color={activeTab === index ? '#010101' : '#8E8E8E'}
+        />
+      </TouchableOpacity>
+    </Link>
   );
 
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView>
         <View style={styles.tabBar}>
-          {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0)}
-          {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1)}
+          {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0, '/(tabs)/')}
+          {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1, '/(tabs)/explore')}
           <TouchableOpacity style={styles.centerButton} onPress={() => setActiveTab(2)}>
             <Ionicons name="bag-outline" size={28} color="white" />
           </TouchableOpacity>

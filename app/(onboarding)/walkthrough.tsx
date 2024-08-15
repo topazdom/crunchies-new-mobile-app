@@ -94,7 +94,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Previous</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/" asChild>
+            <Link href="/(tabs)" asChild>
               <TouchableOpacity style={styles.skipButton}>
                 <ThemedText style={styles.skipButtonText}>Skip</ThemedText>
               </TouchableOpacity>
