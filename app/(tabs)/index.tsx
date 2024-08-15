@@ -7,6 +7,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeHeader from '@/components/home/HomeHeader';
 import BannerCarousel from '@/components/home/BannerCarousel';
+import Recommendations from '@/components/home/Recommendations';
 
 export default function HomeScreen() {
   return (
@@ -17,6 +18,7 @@ export default function HomeScreen() {
           <ScrollView>
             <View style={{paddingHorizontal: 20}}>
               <BannerCarousel />
+              <Recommendations />
             </View>
           </ScrollView>
         </View>
