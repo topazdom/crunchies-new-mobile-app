@@ -11,6 +11,7 @@ import Recommendations from '@/components/home/Recommendations';
 import Categories from '@/components/home/Categories';
 import FoodMenu from '@/components/home/FoodMenu';
 import SizedBox from '@/components/SizedBox';
+import CurrentLocation from '@/components/home/CurrentLocation';
 
 export default function HomeScreen() {
   return (
@@ -20,12 +21,14 @@ export default function HomeScreen() {
         <View style={{flex: 1}}>
           <ScrollView>
             <View style={{paddingHorizontal: 20}}>
+              <CurrentLocation location="3 Ajayi Street Lekki Phase 1 Lagos" />
+              <SizedBox height={15} />
               <BannerCarousel />
               <Recommendations />
             </View>
             <Categories />
             <FoodMenu />
-            <SizedBox height={120} />
+            <SizedBox height={90} />
           </ScrollView>
         </View>
       </SafeAreaView>
