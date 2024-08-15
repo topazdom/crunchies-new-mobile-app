@@ -105,7 +105,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Next</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/" asChild>
+            <Link href="/(tabs)" asChild>
               <TouchableOpacity style={styles.finishButton}>
                 <ThemedText style={styles.finishButtonText}>Finish</ThemedText>
               </TouchableOpacity>

@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import CustomTabBar from '@/components/CustomTabBar'; // Import your CustomTabBar
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -13,7 +14,9 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}>
+      }}
+      tabBar={(props) => <CustomTabBar {...props} />} // Use CustomTabBar here
+    >
       <Tabs.Screen
         name="index"
         options={{
