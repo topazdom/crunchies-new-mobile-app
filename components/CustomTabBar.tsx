@@ -62,7 +62,7 @@ const CustomTabBar = () => {
       <SafeAreaView>
         <View style={styles.tabBar}>
           {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0, '/(tabs)/')}
-          {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1, '/(tabs)/explore')}
+          {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1, '/(tabs)/')}
           <TouchableOpacity style={[styles.centerButtonCon, {backgroundColor: theme === 'light' ? '#fff' : '#fff'}]} onPress={() => setActiveTab(2)}>
             <View style={styles.centerButton}>
               <Ionicons name="bag-outline" size={28} color="white" />

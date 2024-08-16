@@ -1,9 +1,10 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -16,21 +17,48 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    async function checkIfFirstLaunch() {
+      try {
+        const value = await AsyncStorage.getItem('@first_launch');
+        if (value === null) {
+          // App is launched for the first time
+          await AsyncStorage.setItem('@first_launch', 'false');
+          setIsFirstLaunch(true);
+        } else {
+          // App has been launched before
+          setIsFirstLaunch(false);
+        }
+      } catch (error) {
+        console.error('Error checking if first launch:', error);
+        setIsFirstLaunch(false); // Default to false if there's an error
+      }
     }
-  }, [loaded]);
 
-  if (!loaded) {
+    checkIfFirstLaunch();
+  }, []);
+
+  useEffect(() => {
+    if (loaded && isFirstLaunch !== null) {
+      SplashScreen.hideAsync();
+      if (!isFirstLaunch) {
+        // If it's not the first launch, navigate to tabs
+        router.replace('/(tabs)');
+      }
+    }
+  }, [loaded, isFirstLaunch]);
+
+  if (!loaded || isFirstLaunch === null) {
     return null;
   }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <GestureHandlerRootView style={{flex: 1}}>
-        <Stack initialRouteName='(onboarding)'>
+        <Stack>
           <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
