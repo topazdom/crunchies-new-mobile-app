@@ -20,3 +20,8 @@ export function useThemeColor(
     return Colors[theme][colorName];
   }
 }
+
+export function whatTheme() {
+  const theme = useColorScheme() ?? 'light';
+  return theme;
+}

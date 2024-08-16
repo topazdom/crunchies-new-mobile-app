@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
 import { ThemedText } from './ThemedText';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Link } from 'expo-router';
@@ -7,10 +7,31 @@ import { Link } from 'expo-router';
 const CircularButton = () => {
   const text = 'Get Started - Get Started - ';
   const chars = text.split('');
+  const rotationValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const startRotation = () => {
+      Animated.loop(
+        Animated.timing(rotationValue, {
+          toValue: 1,
+          duration: 10000, // Adjust this value to control rotation speed (in milliseconds)
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ).start();
+    };
+
+    startRotation();
+  }, []);
+
+  const rotate = rotationValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
+      <Animated.View style={[styles.textContainer, { transform: [{ rotate }] }]}>
         {chars.map((char, index) => (
           <View
             key={index}
@@ -26,7 +47,7 @@ const CircularButton = () => {
             <ThemedText style={styles.char}>{char}</ThemedText>
           </View>
         ))}
-      </View>
+      </Animated.View>
       <Link
         asChild
         href='/(onboarding)/walkthrough'

@@ -12,6 +12,10 @@ import Categories from '@/components/home/Categories';
 import FoodMenu from '@/components/home/FoodMenu';
 import SizedBox from '@/components/SizedBox';
 import CurrentLocation from '@/components/home/CurrentLocation';
+import HotDealsCarousel from '@/components/home/HotDealsCarousel';
+import TrendingPlatters from '@/components/home/TrendingPlatters';
+import RecommendedSection from '@/components/home/RecommendedSection';
+import AllInCrunchies from '@/components/home/AllInCrunchies';
 
 export default function HomeScreen() {
   return (
@@ -28,6 +32,10 @@ export default function HomeScreen() {
             </View>
             <Categories />
             <FoodMenu />
+            <HotDealsCarousel />
+            <TrendingPlatters />
+            <RecommendedSection />
+            <AllInCrunchies />
             <SizedBox height={90} />
           </ScrollView>
         </View>

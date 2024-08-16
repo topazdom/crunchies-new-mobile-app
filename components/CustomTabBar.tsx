@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, Image } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedView } from './ThemedView';
 import { Link } from 'expo-router';
+import { whatTheme } from '@/hooks/useThemeColor';
 
 const { width } = Dimensions.get('window');
 const TAB_BAR_WIDTH = width;
@@ -13,10 +14,28 @@ const INDICATOR_HEIGHT = 10;
 
 const CustomTabBar = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const theme = whatTheme();
 
   const indicatorStyle = useAnimatedStyle(() => {
+    let xPosition;
+    if (activeTab === 0) {
+      // For the first two tabs
+      xPosition = activeTab * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 1.5;
+    } else if (activeTab === 1) {
+      // For the center button
+      xPosition = activeTab * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 1.08;
+    } else if (activeTab === 2) {
+      // For the center button
+      xPosition = 2 * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 2;
+    } else if (activeTab === 3) {
+      // For the center button
+      xPosition = activeTab * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 4;
+    } else {
+      // For the last two tabs
+      xPosition = activeTab * TAB_WIDTH + (TAB_WIDTH - INDICATOR_WIDTH) / 2.5;
+    }
     return {
-      transform: [{ translateX: withSpring((activeTab * TAB_WIDTH) + (TAB_WIDTH - INDICATOR_WIDTH) / 2) }],
+      transform: [{ translateX: withSpring(xPosition) }],
     };
   });
 
@@ -44,12 +63,20 @@ const CustomTabBar = () => {
         <View style={styles.tabBar}>
           {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0, '/(tabs)/')}
           {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1, '/(tabs)/explore')}
-          <TouchableOpacity style={styles.centerButton} onPress={() => setActiveTab(2)}>
-            <Ionicons name="bag-outline" size={28} color="white" />
+          <TouchableOpacity style={[styles.centerButtonCon, {backgroundColor: theme === 'light' ? '#fff' : '#fff'}]} onPress={() => setActiveTab(2)}>
+            <View style={styles.centerButton}>
+              <Ionicons name="bag-outline" size={28} color="white" />
+            </View>
           </TouchableOpacity>
           {renderIcon(activeTab === 3 ? 'list' : 'list-outline', 3)}
           {renderIcon(activeTab === 4 ? 'person' : 'person-outline', 4)}
-          <Animated.View style={[styles.indicator, indicatorStyle]} />
+          <Animated.View style={[styles.indicator, indicatorStyle]}>
+            <Image
+              source={require('@/assets/images/tab-indicator.png')}
+              style={styles.indicatorImage}
+              resizeMode="contain"
+            />
+          </Animated.View>
         </View>
       </SafeAreaView>
     </ThemedView>
@@ -79,17 +106,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  centerButtonCon: {
+    width: 72,
+    height: 72,
+    borderRadius: 40,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 20,
+  },
   centerButton: {
-    width: 60,
-    height: 60,
+    width: 52,
+    height: 52,
     borderRadius: 30,
     backgroundColor: '#E32636',
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 20,
     shadowColor: '#E32636',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.7,
     shadowRadius: 4,
     elevation: 8,
   },
@@ -98,9 +133,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: INDICATOR_WIDTH,
     height: INDICATOR_HEIGHT,
-    backgroundColor: '#E32636',
-    borderTopLeftRadius: INDICATOR_WIDTH,
-    borderTopRightRadius: INDICATOR_WIDTH,
+  },
+  indicatorImage: {
+    width: INDICATOR_WIDTH,
+    height: INDICATOR_HEIGHT,
   },
 });
 
