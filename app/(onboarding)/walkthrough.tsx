@@ -94,7 +94,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Previous</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/(tabs)" asChild>
+            <Link href="/webview" asChild>
               <TouchableOpacity style={styles.skipButton}>
                 <ThemedText style={styles.skipButtonText}>Skip</ThemedText>
               </TouchableOpacity>
@@ -105,9 +105,9 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Next</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/(tabs)" asChild>
+            <Link href="/webview" asChild>
               <TouchableOpacity style={styles.finishButton}>
-                <ThemedText style={styles.finishButtonText}>Finish</ThemedText>
+                <ThemedText style={styles.finishButtonText}>Let's Crunch!</ThemedText>
               </TouchableOpacity>
             </Link>
           )}

@@ -8,11 +8,13 @@ import { ThemedView } from '@/components/ThemedView';
 import { deviceWidth } from '@/constants/Size';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CircularButton from '@/components/CircularButton';
+import { whatTheme } from '@/hooks/useThemeColor';
 
 export default function OnboardingLanding() {
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(50);
   const translateX = useSharedValue(50);
+  const theme = whatTheme();
 
   useEffect(() => {
     opacity.value = withTiming(1, { duration: 1000 });
@@ -52,7 +54,8 @@ export default function OnboardingLanding() {
             style={{
               resizeMode: 'contain',
               width: '100%',
-              height: '100%'
+              height: '100%',
+              opacity: theme === 'light' ? 1 : 0.1
             }}
           />
         </View>

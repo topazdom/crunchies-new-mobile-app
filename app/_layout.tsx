@@ -46,7 +46,7 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
       if (!isFirstLaunch) {
         // If it's not the first launch, navigate to tabs
-        router.replace('/(tabs)');
+        router.replace('/webview');
       }
     }
   }, [loaded, isFirstLaunch]);
@@ -61,6 +61,7 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="webview" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
       </GestureHandlerRootView>
