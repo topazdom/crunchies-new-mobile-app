@@ -28,7 +28,7 @@ const FoodItem = ({ item }) => (
   <ThemedView style={styles.foodItem}>
     <Image source={item.image} style={styles.foodImage} />
     <TouchableOpacity style={styles.favoriteButton}>
-      <Ionicons name="heart-outline" size={24} color={commonColors.primary} />
+      <Ionicons name="heart-outline" size={20} color={commonColors.primary} />
     </TouchableOpacity>
     {item.hotDeal && (
       <View style={styles.hotDealBadge}>

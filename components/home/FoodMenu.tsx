@@ -31,8 +31,8 @@ const FoodItem = ({ name, price, image, inBag = 0 }) => {
         <TouchableOpacity onPress={handleWishlist}>
           <FontAwesome 
             name={isWishlisted ? "heart" : "heart-o"} 
-            size={24} 
-            color={isWishlisted ? "red" : "black"} 
+            size={17} 
+            color={isWishlisted ? commonColors.primary : commonColors.primary} 
           />
         </TouchableOpacity>
       </Animated.View>
@@ -108,8 +108,11 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 5,
+    height: 30,
+    width: 30,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   name: {
     fontSize: 16,
