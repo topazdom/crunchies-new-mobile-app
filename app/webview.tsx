@@ -1,6 +1,8 @@
-import { WebView } from 'react-native-webview';
 import { SafeAreaView, StyleSheet } from 'react-native';
+
+import React from 'react';
 import { ThemedView } from '@/components/ThemedView';
+import { WebView } from 'react-native-webview';
 
 export default function WebViewCon() {
   return (
