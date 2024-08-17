@@ -1,13 +1,16 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack, useRouter } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import * as SplashScreen from 'expo-splash-screen';
+
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Stack, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React from 'react';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { useFonts } from 'expo-font';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -17,7 +20,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean|null>(null);
   const router = useRouter();
 
   useEffect(() => {
