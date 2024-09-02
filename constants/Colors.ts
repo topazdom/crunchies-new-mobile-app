@@ -39,5 +39,6 @@ export const commonColors = {
   primary: '#E90C31',
   primaryLight: 'rgba(233,12,49,0.3)',
   red100: '#E5667C',
-  green: '#34C759'
+  green: '#34C759',
+  loader: '#ca1611',
 }
