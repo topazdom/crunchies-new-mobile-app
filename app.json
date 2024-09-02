@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "crunchies",
+    "name": "Crunchies",
     "slug": "crunchies",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.black_vibes.crunchies"
+      "package": "com.crunchiesonline.customerapp"
     },
     "web": {
       "bundler": "metro",
