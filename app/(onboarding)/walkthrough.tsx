@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Animated, {
+  runOnJS,
+  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  useAnimatedGestureHandler,
-  runOnJS,
 } from 'react-native-reanimated';
-import { StatusBar } from 'expo-status-bar';
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import { slides } from '@/data/onboardData';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
-import { Colors } from '@/constants/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { slides } from '@/data/onboardData';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -35,6 +37,15 @@ export default function Walkthrough() {
       translateX.value = withTiming(-SCREEN_WIDTH * (currentIndex - 1));
     }
   };
+
+  async function setOnboardingComplete() {
+    try {
+      const value = await AsyncStorage.getItem('@first_launch');
+      await AsyncStorage.setItem('@first_launch', 'false');
+    } catch (error) {
+      console.error('Error setting first launch:', error);
+    }
+  }
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
@@ -105,7 +116,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Next</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/webview" asChild>
+            <Link replace={true} href="/webview" onPress={setOnboardingComplete} asChild>
               <TouchableOpacity style={styles.finishButton}>
                 <ThemedText style={styles.finishButtonText}>Let's Crunch!</ThemedText>
               </TouchableOpacity>
