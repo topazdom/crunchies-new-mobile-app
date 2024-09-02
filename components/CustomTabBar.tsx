@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, Image } from 'react-native';
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { Dimensions, Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Href, Link } from 'expo-router';
+import React, { useState } from 'react';
+
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedView } from './ThemedView';
-import { Link } from 'expo-router';
 import { whatTheme } from '@/hooks/useThemeColor';
 
 const { width } = Dimensions.get('window');
@@ -39,7 +40,7 @@ const CustomTabBar = () => {
     };
   });
 
-  const renderIcon = (name, index, href='') => (
+  const renderIcon = (name: any | undefined, index: React.SetStateAction<number>, href: Href<any> = "/" ) => (
     <Link
       asChild
       href={href}
