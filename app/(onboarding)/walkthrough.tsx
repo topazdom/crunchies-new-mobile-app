@@ -52,6 +52,7 @@ export default function Walkthrough() {
       ctx.startX = translateX.value;
     },
     onActive: (event, ctx) => {
+      //@ts-ignore
       translateX.value = ctx.startX + event.translationX;
     },
     onEnd: (event) => {
@@ -105,7 +106,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Previous</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link href="/webview" asChild>
+            <Link href="/home" asChild>
               <TouchableOpacity style={styles.skipButton}>
                 <ThemedText style={styles.skipButtonText}>Skip</ThemedText>
               </TouchableOpacity>
@@ -116,7 +117,7 @@ export default function Walkthrough() {
               <ThemedText style={styles.navButtonText}>Next</ThemedText>
             </TouchableOpacity>
           ) : (
-            <Link replace={true} href="/webview" onPress={setOnboardingComplete} asChild>
+            <Link replace={true} href="/home" onPress={setOnboardingComplete} asChild>
               <TouchableOpacity style={styles.finishButton}>
                 <ThemedText style={styles.finishButtonText}>Let's Crunch!</ThemedText>
               </TouchableOpacity>
