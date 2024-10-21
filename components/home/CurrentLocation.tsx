@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import { Ionicons } from '@expo/vector-icons'; // Make sure to install expo vector icons if not already installed
-import { ThemedView } from '../ThemedView';
+import React from 'react';
 import { ThemedText } from '../ThemedText';
+import { ThemedView } from '../ThemedView';
 
 const CurrentLocation = ({ location }) => {
   return (
@@ -13,13 +14,13 @@ const CurrentLocation = ({ location }) => {
       />
       <ThemedView style={styles.content}>
         <View style={styles.iconContainer}>
-          <Ionicons name="location" size={24} color="#FF0000" />
+          <Ionicons name="cart" size={24} color="#FF0000" />
         </View>
         <View style={styles.textContainer}>
-          <ThemedText style={styles.title}>Current location</ThemedText>
+          <ThemedText style={styles.title}>OR Explore Our Menus</ThemedText>
           <ThemedText numberOfLines={1} style={styles.address}>{location}</ThemedText>
         </View>
-        <Ionicons name="chevron-forward" size={24} color="#888888" />
+        <Ionicons name="chevron-down" size={24} color="#888888" />
       </ThemedView>
     </TouchableOpacity>
   );

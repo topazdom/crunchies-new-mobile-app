@@ -1,10 +1,11 @@
-import { deviceWidth } from '@/constants/Size';
-import React, { useRef, useEffect } from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import Animated, {
-  useSharedValue,
   useAnimatedScrollHandler,
+  useSharedValue,
 } from 'react-native-reanimated';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+
+import { deviceWidth } from '@/constants/Size';
 
 const width = deviceWidth - 40;
 const BANNER_HEIGHT = 140;
@@ -69,12 +70,21 @@ const styles = StyleSheet.create({
     height: BANNER_HEIGHT,
     width: width,
     borderRadius: 30,
-    overflow: 'hidden'
+    overflow: 'hidden',
+
   },
   imageContainer: {
     width: width,
     height: BANNER_HEIGHT,
     overflow: 'hidden',
+
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.20,
+    shadowRadius: 3.84,
+
+    // Elevation for Android
+    elevation: 5,
   },
   banner: {
     width: width + (deviceWidth * 0.35),

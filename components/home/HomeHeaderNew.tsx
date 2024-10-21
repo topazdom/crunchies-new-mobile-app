@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import BannerCarousel from './BannerCarousel';
 import { Ionicons } from '@expo/vector-icons';
 import OrderButton from '../OrderNowBtn';
 import React from 'react';
@@ -8,17 +9,35 @@ import { ThemedView } from '../ThemedView';
 import { commonColors } from '@/constants/Colors';
 import { router } from 'expo-router';
 
-const HomeHeader = () => {
+const HomeHeaderNew = () => {
+  const getMealTime = (): string => {
+    const currentHour = new Date().getHours();
+    console.log(currentHour);
+    
+    if (currentHour >= 5 && currentHour < 11) {
+      return "breakfast";
+    } else if (currentHour >= 11 && currentHour < 17) {
+      return "lunch";
+    } else if (currentHour >= 17 && currentHour < 22) {
+      return "dinner";
+    } else {
+      return "rest";
+    }
+  };
+
+  let mealTime = getMealTime();
+
   return (
     <ThemedView>
       <View style={styles.header}>
         <View style={styles.greeting}>
-          <ThemedText style={styles.name}>Welcome to Crunchies!</ThemedText>
-          <ThemedText style={styles.message}>Taste the Difference!</ThemedText>
+          <ThemedText style={styles.name}>Hey, Cruncher!</ThemedText>
+          <ThemedText style={styles.message}>It's {mealTime} time!</ThemedText>
         </View>
-        <TouchableOpacity style={styles.searchIcon}>
+        <BannerCarousel />
+        {/* <TouchableOpacity style={styles.searchIcon}>
           <Ionicons name="search-outline" size={24} color={commonColors.primary} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.orderbtn}>
         <OrderButton onPress={()=>router.push('/webview')} />
@@ -29,20 +48,25 @@ const HomeHeader = () => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: 14,
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   orderbtn: {
     alignSelf: "center",
-    paddingVertical: 20
+    paddingVertical: 10
   },
   greeting: {
     flexDirection: 'column',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
   },
   name: {
     fontSize: 24,
@@ -64,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeHeader;
+export default HomeHeaderNew;

@@ -1,14 +1,17 @@
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import { ThemedText } from '../ThemedText';
 
 const categories = [
-  { id: '1', name: 'Pizza', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
-  { id: '2', name: 'Biryani', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
-  { id: '3', name: 'Burger', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
-  { id: '4', name: 'Pizza', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
-  { id: '5', name: 'Biryani', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
-  { id: '6', name: 'Burger', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
+  { id: '1', name: 'Shawarma', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
+  { id: '2', name: 'Food', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
+  { id: '3', name: 'Pastery', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
+  { id: '4', name: 'Cakes', places: 75, image: require('@/assets/images/pizza.png'), color: '#FFF3E0' },
+  { id: '5', name: 'Protein', places: 80, image: require('@/assets/images/biryani.png'), color: '#FFEBEE' },
+  { id: '6', name: 'Bread', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
+  { id: '7', name: 'Ice Cream', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
+  { id: '8', name: 'Drinks', places: 35, image: require('@/assets/images/burger.png'), color: '#E8F5E9' },
   // Add more categories as needed
 ];
 
@@ -26,7 +29,7 @@ const CategoryItem = ({ item }) => (
 const Categories = () => {
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.title}>Categories</ThemedText>
+      <ThemedText style={styles.title}>Hot Categories</ThemedText>
       <FlatList
         data={categories}
         renderItem={({ item }) => <CategoryItem item={item} />}

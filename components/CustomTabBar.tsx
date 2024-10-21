@@ -3,6 +3,7 @@ import { Dimensions, Image, SafeAreaView, StyleSheet, TouchableOpacity, View } f
 import { Href, Link } from 'expo-router';
 import React, { useState } from 'react';
 
+import { BASE_URL } from '@/constants/Url';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedView } from './ThemedView';
 import { whatTheme } from '@/hooks/useThemeColor';
@@ -13,7 +14,7 @@ const TAB_WIDTH = TAB_BAR_WIDTH / 5;
 const INDICATOR_WIDTH = 60;
 const INDICATOR_HEIGHT = 10;
 
-const CustomTabBar = () => {
+const CustomTabBar = ({ onMessage }: { onMessage: (message: string) => void }) => {
   const [activeTab, setActiveTab] = useState(0);
   const theme = whatTheme();
 
@@ -40,7 +41,16 @@ const CustomTabBar = () => {
     };
   });
 
-  const renderIcon = (name: any | undefined, index: React.SetStateAction<number>, href: Href<any> = "/" ) => (
+  const webviewLinkTo = (endpoint?: string): Href<string> => {
+    return "/webview?linkparam="+ BASE_URL + endpoint as Href<string>;
+  }
+
+  const openCart = () => {
+    onMessage('open-cart');
+    //setActiveTab(2)
+  }
+
+  const renderIcon = (name: any | undefined, index: React.SetStateAction<number>, href: Href<any> = '/home' ) => (
     <Link
       asChild
       href={href}
@@ -62,15 +72,15 @@ const CustomTabBar = () => {
     <ThemedView style={styles.container}>
       <SafeAreaView>
         <View style={styles.tabBar}>
-          {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0, '/(tabs)/')}
-          {renderIcon(activeTab === 1 ? 'heart' : 'heart-outline', 1, '/(tabs)/')}
-          <TouchableOpacity style={[styles.centerButtonCon, {backgroundColor: theme === 'light' ? '#fff' : '#fff'}]} onPress={() => setActiveTab(2)}>
+          {renderIcon(activeTab === 0 ? 'home' : 'home-outline', 0, webviewLinkTo('/menu'))}
+          {renderIcon(activeTab === 1 ? 'pricetags' : 'pricetags-outline', 1, webviewLinkTo('/offers'))}
+          <TouchableOpacity style={[styles.centerButtonCon, {backgroundColor: theme === 'light' ? '#fff' : '#fff'}]} onPress={() => openCart()}>
             <View style={styles.centerButton}>
               <Ionicons name="bag-outline" size={28} color="white" />
             </View>
           </TouchableOpacity>
-          {renderIcon(activeTab === 3 ? 'list' : 'list-outline', 3)}
-          {renderIcon(activeTab === 4 ? 'person' : 'person-outline', 4)}
+          {renderIcon(activeTab === 3 ? 'chatbubbles' : 'chatbubbles-outline', 3, webviewLinkTo('/contact-us'))}
+          {renderIcon(activeTab === 4 ? 'person' : 'person-outline', 4, webviewLinkTo('/account'))}
           <Animated.View style={[styles.indicator, indicatorStyle]}>
             <Image
               source={require('@/assets/images/tab-indicator.png')}
