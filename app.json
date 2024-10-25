@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.crunchiesonline.customerapp"
+      "package": "com.crunchiesonline.customerapp",
+      "googleServicesFile": "./keys/google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -29,7 +30,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
