@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-import { AppMessage } from '@/components/WebViewLoader';
+import { AppMessage } from '@/app/webview';
 import { NavigationContainerRef } from '@react-navigation/native';
 import WebView from 'react-native-webview';
 import messaging from '@react-native-firebase/messaging';

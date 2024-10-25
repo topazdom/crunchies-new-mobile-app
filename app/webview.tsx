@@ -1,14 +1,20 @@
 import { ActivityIndicator, Linking, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
+import { WebView, WebViewMessageEvent } from 'react-native-webview';
+import { handleNotificationWorkflow, saveTokenStatusToSecureStore } from '@/services/PushService';
 
 import CustomTabBar from '@/components/CustomTabBar';
 //import HomeLoadingPage from '@/components/HomeLoadingPage';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
-import { WebView } from 'react-native-webview';
 import { commonColors } from '@/constants/Colors';
 import { useLocalSearchParams } from 'expo-router';
+
+export type AppMessage = {
+  action: string,
+  payload?: any
+}
 
 export default function WebViewCon() {
   const webViewRef = useRef<WebView>(null);
@@ -17,6 +23,30 @@ export default function WebViewCon() {
   const [refreshing, setRefreshing] = useState(false);
 const [refresherEnabled, setEnableRefresher] = useState(true);
 
+const handleMessage = async (event: WebViewMessageEvent) => {
+  const { data } = event.nativeEvent;
+
+  let msg = JSON.parse(data) as AppMessage;
+
+  if (msg.action === 'RequestToken') {
+    if (webViewRef.current) {
+      const {token, tokenSaved} = await handleNotificationWorkflow();
+      let msg: AppMessage = {
+        action: 'SaveToken',
+        payload: { token }
+      }
+      //console.log(JSON.stringify(msg));
+      if (!tokenSaved) {
+        webViewRef.current.postMessage(JSON.stringify(msg));
+      }
+    }
+  }
+  if (msg.action === 'TokenSaved') {
+    console.log('Returning proper');
+    saveTokenStatusToSecureStore(true);
+  }
+  console.log('Received message from WebView:', data);
+};
 
 // Handle message from CustomTabBar
 const handleTabBarMessage = (message: string) => {
@@ -77,6 +107,7 @@ const handleTabBarMessage = (message: string) => {
           injectedJavaScript={runFirst}
           startInLoadingState={true}
           cacheEnabled={false}
+          onMessage={handleMessage}
           onScroll={handleScroll}
           onLoadEnd={()=>setRefreshing(false)}
           source={{ uri: linkparam as string ?? 'https://www.crunchiesonline.com/menu' }}
