@@ -3,12 +3,14 @@ import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
+import messaging from '@react-native-firebase/messaging';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useFonts } from 'expo-font';
 
@@ -23,6 +25,19 @@ export default function RootLayout() {
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean|null>(null);
   const router = useRouter();
 
+  async function requestUserPermission() {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+    }
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+  
   useEffect(() => {
     async function checkIfFirstLaunch() {
       try {
@@ -52,6 +67,8 @@ export default function RootLayout() {
         router.replace('/home');
       }
     }
+    
+    requestUserPermission();
   }, [loaded, isFirstLaunch]);
 
   if (!loaded || isFirstLaunch === null) {
