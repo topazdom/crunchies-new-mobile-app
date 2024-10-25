@@ -32,7 +32,7 @@ const HomeHeaderNew = () => {
       <View style={styles.header}>
         <View style={styles.greeting}>
           <ThemedText style={styles.name}>Hey, Cruncher!</ThemedText>
-          <ThemedText style={styles.message}>It's {mealTime} time!</ThemedText>
+          <ThemedText style={styles.message}>It's {mealTime} time...</ThemedText>
         </View>
         <BannerCarousel />
         {/* <TouchableOpacity style={styles.searchIcon}>
