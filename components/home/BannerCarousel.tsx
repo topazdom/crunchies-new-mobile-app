@@ -2,7 +2,9 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import { BASE_URL, webviewLinkTo } from '@/constants/Url';
 import { Dimensions, Image, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Href, router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { deviceWidth } from '@/constants/Size';
@@ -11,20 +13,16 @@ const width = deviceWidth - 40;
 const BANNER_HEIGHT = 140;
 const AUTO_SWIPE_INTERVAL = 3000;
 
-const webviewLinkTo = (endpoint?: string): string => {
-  return "/webview?linkparam=" + BASE_URL + endpoint;
-};
-
 const defaultBanners = [
-  { image: require('@/assets/images/banner-1.png'), url: '/path/to/page1' },
-  { image: require('@/assets/images/banner-2.png'), url: '/path/to/page2' },
-  { image: require('@/assets/images/banner-3.png'), url: '/path/to/page3' },
+  { image: require('@/assets/images/banner-1.png'), url: 'menu?cat=Pastry' },
+  { image: require('@/assets/images/banner-2.png'), url: 'menu?cat=Food' },
+  { image: require('@/assets/images/banner-3.png'), url: '/offers' },
 ];
 
 const BannerCarousel = () => {
   const [banners, setBanners] = useState(defaultBanners);
   const scrollX = useSharedValue(0);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<Animated.ScrollView>(null);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -49,7 +47,7 @@ const BannerCarousel = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch('https://example.com/api/banners');
+        const response = await fetch('https://api.crunchiesonline.com/api/v1/banners');
         const data = await response.json();
         const dynamicBanners = data.map((item: any) => ({
           image: { uri: item.image },
@@ -65,8 +63,14 @@ const BannerCarousel = () => {
   }, []);
 
   const handleBannerPress = (url: string) => {
+    //check if the url is a web url and if the domain is the same as the BASE_URL open externally usign Linking
+    if (url.startsWith('http') && !url.startsWith (BASE_URL)) {
+      Linking.openURL(url);
+      return;
+    } 
     const link = webviewLinkTo(url);
-    Linking.openURL(link);
+    
+    router.push(link);
   };
 
   return (
@@ -80,9 +84,11 @@ const BannerCarousel = () => {
         scrollEventThrottle={16}
       >
         {banners.map((banner, index) => (
-          <TouchableOpacity key={index} onPress={() => handleBannerPress(banner.url)}>
-            <Image source={banner.image} style={styles.banner} />
-          </TouchableOpacity>
+
+            <TouchableOpacity key={index} onPress={() => handleBannerPress(banner.url)}>
+              <Image source={banner.image} style={styles.banner} />
+            </TouchableOpacity>
+
         ))}
       </Animated.ScrollView>
     </View>
@@ -92,11 +98,14 @@ const BannerCarousel = () => {
 const styles = StyleSheet.create({
   container: {
     height: BANNER_HEIGHT,
+    width: width,
+    borderRadius: 30,
+    overflow: 'hidden',
   },
   banner: {
-    width,
+    width: width,
     height: BANNER_HEIGHT,
-    resizeMode: 'cover',
+    //resizeMode: 'cover',
   },
 });
 
