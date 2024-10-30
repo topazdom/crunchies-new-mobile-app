@@ -9,6 +9,7 @@ import { RefreshControl } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedView } from '@/components/ThemedView';
 import { commonColors } from '@/constants/Colors';
+import { decodeLinkparam } from '@/constants/Url';
 import { useLocalSearchParams } from 'expo-router';
 
 export type AppMessage = {
@@ -19,6 +20,13 @@ export type AppMessage = {
 export default function WebViewCon() {
   const webViewRef = useRef<WebView>(null);
   const { linkparam } = useLocalSearchParams();
+  //console.log(linkparam);
+  // how do I get linkparam in this form linkparam=https://www.crunchiesonline.com/menu?cat=Shawarma
+  let decodedLink = '';
+
+  if (linkparam) {
+    decodedLink = decodeLinkparam(linkparam as string);
+  }
 
   const [refreshing, setRefreshing] = useState(false);
 const [refresherEnabled, setEnableRefresher] = useState(true);
@@ -110,7 +118,7 @@ const handleTabBarMessage = (message: string) => {
           onMessage={handleMessage}
           onScroll={handleScroll}
           onLoadEnd={()=>setRefreshing(false)}
-          source={{ uri: linkparam as string ?? 'https://www.crunchiesonline.com/menu' }}
+          source={{ uri: decodedLink ? decodedLink : 'https://www.crunchiesonline.com/menu' }}
           //renderLoading={()=> <HomeLoadingPage />}
           renderLoading={() => <View style={styles.overlay}>
                                 <ActivityIndicator size="large" color={commonColors.loader} />
