@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
+import { handleNotificationWorkflow } from '@/services/PushService';
 import messaging from '@react-native-firebase/messaging';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useFonts } from 'expo-font';
@@ -25,7 +26,7 @@ export default function RootLayout() {
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean|null>(null);
   const router = useRouter();
 
-  async function requestUserPermission() {
+  /* async function requestUserPermission() {
     if (Platform.OS === 'android') {
       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
     }
@@ -36,7 +37,7 @@ export default function RootLayout() {
     if (enabled) {
       console.log('Authorization status:', authStatus);
     }
-  }
+  } */
   
   useEffect(() => {
     async function checkIfFirstLaunch() {
@@ -68,7 +69,8 @@ export default function RootLayout() {
       }
     }
     
-    requestUserPermission();
+    handleNotificationWorkflow();
+    
   }, [loaded, isFirstLaunch]);
 
   if (!loaded || isFirstLaunch === null) {
