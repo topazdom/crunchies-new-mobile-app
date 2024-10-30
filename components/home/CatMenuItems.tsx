@@ -1,24 +1,38 @@
+import { BASE_URL, webviewLinkTo } from '@/constants/Url';
+import { Href, router } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import React from 'react';
-import { router } from 'expo-router';
 
 const menuItems = [
   { title: 'Food', image: require('@/assets/images/categories/food.jpg') },
   { title: 'Protein', image: require('@/assets/images/categories/protein.jpg') },
-  { title: 'Pastries', image: require('@/assets/images/categories/pastries.jpg') },
-  { title: 'Cake', image: require('@/assets/images/categories/cake.jpg') },
+  { title: 'Pastry', image: require('@/assets/images/categories/pastries.jpg') },
+  { title: 'Cakes', image: require('@/assets/images/categories/cake.jpg') },
   { title: 'Shawarma', image: require('@/assets/images/categories/shawarma.jpg') },
   { title: 'Bread', image: require('@/assets/images/categories/bread.jpg') },
   { title: 'Ice Cream', image: require('@/assets/images/categories/icecream.jpg') },
   { title: 'Drinks', image: require('@/assets/images/categories/drinks.jpg') },
 ];
 const CatMenuItems = () => {
+  /* const webviewLinkTo = (category?: string): Href<string> => {
+    // make category url param ready by making it a query string
+    let endpoint = "menu?cat=" + encodeURIComponent(category || '');
+    let link = "/webview?linkparam=" + BASE_URL + endpoint as Href<string>;
+    //console.log(link);
+    return link;
+  } */
+
+    const makeCatLink = (category: string) => {
+    let endpoint = "menu?cat=" + encodeURIComponent(category);
+    return endpoint
+    }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.grid}>
         {menuItems.map((item, index) => (
-          <TouchableOpacity onPress={() => router.push('/webview')} key={index} style={styles.card}>
+          <TouchableOpacity onPress={() => router.push(webviewLinkTo(makeCatLink(item.title)))} key={index} style={styles.card}>
             <Image source={item.image} style={styles.image} />
             <Text style={styles.title}>{item.title}</Text>
           </TouchableOpacity>
