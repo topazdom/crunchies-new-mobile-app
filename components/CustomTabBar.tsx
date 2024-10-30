@@ -1,9 +1,9 @@
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { BASE_URL, webviewLinkTo } from '@/constants/Url';
 import { Dimensions, Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Href, Link } from 'expo-router';
 import React, { useState } from 'react';
 
-import { BASE_URL } from '@/constants/Url';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedView } from './ThemedView';
 import { whatTheme } from '@/hooks/useThemeColor';
@@ -41,9 +41,9 @@ const CustomTabBar = ({ onMessage }: { onMessage: (message: string) => void }) =
     };
   });
 
-  const webviewLinkTo = (endpoint?: string): Href<string> => {
+  /* const webviewLinkTo = (endpoint?: string): Href<string> => {
     return "/webview?linkparam="+ BASE_URL + endpoint as Href<string>;
-  }
+  } */
 
   const openCart = () => {
     onMessage('open-cart');
