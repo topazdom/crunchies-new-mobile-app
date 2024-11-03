@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "Crunchies",
-    "slug": "crunchies",
+    "slug": "crunchies-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "crunchies",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.crunchiesonline.crunchies.customers",
+      "bundleIdentifier": "com.peachblossoms.crunchies.customers",
       "googleServicesFile": "./keys/GoogleService-Info.plist"
     },
     "android": {
@@ -52,9 +52,6 @@
       "router": {
         "origin": false
       },
-      "eas": {
-        "projectId": "fed488b1-dfa1-4584-bfae-15a5f42f5edc"
-      }
     }
   }
 }
