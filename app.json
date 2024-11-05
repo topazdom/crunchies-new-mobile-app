@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.peachblossoms.crunchies.customers",
+      "bundleIdentifier": "com.crunchiesonline.crunchies.customers",
       "googleServicesFile": "./keys/GoogleService-Info.plist"
     },
     "android": {
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.crunchiesonline.customerapp",
+      "package": "com.peachblossoms.crunchies.customers",
       "googleServicesFile": "./keys/google-services.json"
     },
     "web": {
@@ -52,6 +52,9 @@
       "router": {
         "origin": false
       },
+      "eas": {
+        "projectId": "f312fd6c-f73d-41fe-8843-606878f5af59"
+      }
     }
   }
 }

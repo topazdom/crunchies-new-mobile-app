@@ -6,7 +6,7 @@ module.exports = ({ config }) => {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
-      package: "com.crunchiesonline.customerapp",
+      package: "com.peachblossoms.crunchies.customers",
         googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? config.android.googleServicesFile,
       },
       ios: {
