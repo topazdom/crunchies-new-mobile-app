@@ -2,7 +2,7 @@
   "expo": {
     "name": "Crunchies",
     "slug": "crunchies-app",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "crunchies",
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.peachblossoms.crunchies.customers",
-      "googleServicesFile": "./keys/google-services.json"
+      "googleServicesFile": "./keys/google-services.json",
     },
     "web": {
       "bundler": "metro",
