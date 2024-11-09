@@ -12,7 +12,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { commonColors } from '@/constants/Colors';
 import { decodeLinkparam } from '@/constants/Url';
 import { useLocalSearchParams } from 'expo-router';
-import { useNetInfoInstance } from '@react-native-community/netinfo';
+
+//import { useNetInfoInstance } from '@react-native-community/netinfo';
 
 export type AppMessage = {
   action: string,
@@ -24,7 +25,7 @@ export default function WebViewCon() {
   const { linkparam } = useLocalSearchParams();
 
   //const [isConnected, setIsConnected] = useState<boolean | null>(null);
-  const { netInfo: { type, isConnected, isInternetReachable }, refresh } = useNetInfoInstance();
+  //const { netInfo: { type, isConnected, isInternetReachable }, refresh } = useNetInfoInstance();
 
   let decodedLink = '';
 
@@ -144,7 +145,7 @@ const handleTabBarMessage = (message: string) => {
         />
         {/* <HomeLoadingPage /> */}
 
-        <Modal
+        {/* <Modal
             transparent={false}
             style={{ zIndex: -100 }}
             animationType="slide"
@@ -152,7 +153,7 @@ const handleTabBarMessage = (message: string) => {
             onDismiss={onRefresh}
           >
             <NoConnection refresh={onRefresh}/>
-          </Modal>
+          </Modal> */}
 
         </ScrollView>
         <CustomTabBar onMessage={handleTabBarMessage} />
