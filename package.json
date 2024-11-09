@@ -17,7 +17,6 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.3",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-native-community/netinfo": "11.3.1",
     "@react-native-firebase/app": "^21.2.0",
     "@react-native-firebase/messaging": "^21.2.0",
     "@react-navigation/native": "^6.0.2",
@@ -47,6 +46,7 @@
     "react-native-svg": "15.2.0",
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
+    "remove": "^0.1.5",
     "rn-placeholder": "^3.0.3"
   },
   "devDependencies": {
