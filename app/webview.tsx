@@ -1,9 +1,10 @@
-import { ActivityIndicator, Linking, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, Modal, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
 import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { handleNotificationWorkflow, saveTokenStatusToSecureStore } from '@/services/PushService';
 
 import CustomTabBar from '@/components/CustomTabBar';
+import NoConnection from '@/components/NoConnection';
 //import HomeLoadingPage from '@/components/HomeLoadingPage';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
@@ -11,6 +12,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { commonColors } from '@/constants/Colors';
 import { decodeLinkparam } from '@/constants/Url';
 import { useLocalSearchParams } from 'expo-router';
+import { useNetInfoInstance } from '@react-native-community/netinfo';
 
 export type AppMessage = {
   action: string,
@@ -20,8 +22,10 @@ export type AppMessage = {
 export default function WebViewCon() {
   const webViewRef = useRef<WebView>(null);
   const { linkparam } = useLocalSearchParams();
-  //console.log(linkparam);
-  // how do I get linkparam in this form linkparam=https://www.crunchiesonline.com/menu?cat=Shawarma
+
+  //const [isConnected, setIsConnected] = useState<boolean | null>(null);
+  const { netInfo: { type, isConnected, isInternetReachable }, refresh } = useNetInfoInstance();
+
   let decodedLink = '';
 
   if (linkparam) {
@@ -117,12 +121,14 @@ const handleTabBarMessage = (message: string) => {
           cacheEnabled={false}
           onMessage={handleMessage}
           onScroll={handleScroll}
+          onHttpError={(e)=> {}}
           onLoadEnd={()=>setRefreshing(false)}
           source={{ uri: decodedLink ? decodedLink : 'https://www.crunchiesonline.com/menu' }}
           //renderLoading={()=> <HomeLoadingPage />}
           renderLoading={() => <View style={styles.overlay}>
                                 <ActivityIndicator size="large" color={commonColors.loader} />
                             </View>}
+          renderError={(errorDomain, errorCode, errorDesc) => <NoConnection error={{ code: errorCode, message: errorDesc }} refresh={onRefresh}/>}
           onError={(event) => {
             const url = event.nativeEvent.url;
             if (
@@ -133,11 +139,24 @@ const handleTabBarMessage = (message: string) => {
               webViewRef.current?.goBack();
               Linking.openURL(url);
             }
+            //checkInternetConnection();
           }}
         />
         {/* <HomeLoadingPage /> */}
+
+        <Modal
+            transparent={false}
+            style={{ zIndex: -100 }}
+            animationType="slide"
+            visible={isConnected === false || isInternetReachable !== true}
+            onDismiss={onRefresh}
+          >
+            <NoConnection refresh={onRefresh}/>
+          </Modal>
+
         </ScrollView>
         <CustomTabBar onMessage={handleTabBarMessage} />
+        
       </SafeAreaView>
     </ThemedView>
   );
