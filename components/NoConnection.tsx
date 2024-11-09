@@ -22,7 +22,8 @@ const NoConnection: React.FC<Props> = ({ refresh, error }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        ...StyleSheet.absoluteFillObject,
+        //flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
