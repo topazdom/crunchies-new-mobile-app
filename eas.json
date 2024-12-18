@@ -8,6 +8,16 @@
       "developmentClient": true,
       "distribution": "internal"
     },
+    "dev-client": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "preview": {
       "distribution": "internal",
       "android": {
